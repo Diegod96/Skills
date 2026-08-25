@@ -41,6 +41,8 @@ State the choice and the reasoning. Rough heuristics:
 
 If the org already handles a similar case one way, match it. Consistency beats local optimality — a flow that matches five other flows is easier to maintain than a technically superior Apex class that stands alone.
 
+**When the answer is Apex, decompose by layer in the spec.** The team's standard is Controller → Service → Domain → Selector, so name the classes and methods per layer rather than describing the logic as one block: which Selector methods are needed, which Domain rules, which Service orchestrates them, which Controller entry point exposes it. This surfaces two things early — whether an existing Selector already covers the query (Rule 10 means adding a method, not a class), and whether the business rules are actually separable from the process, which is where badly-scoped tickets tend to fall apart.
+
 ## Edge cases to work through
 
 For every spec, explicitly consider and document the answer (or mark it unknown):

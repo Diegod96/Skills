@@ -67,6 +67,18 @@ Salesforce's coverage percentage is a deployment gate, not a quality signal. A c
 - No `System.runAs()` coverage on anything with sharing implications
 - Tests that will break on a date rollover or fiscal period change
 
+### Architecture compliance
+This team mandates Controller → Service → Domain → Selector layering, where every piece of logic belongs to exactly one layer. Flag:
+
+- SOQL anywhere but a Selector; DML anywhere but a Service
+- Business rules or status transitions outside a Domain (`app.Status__c = 'Approved';` in a Service is a violation)
+- Any logic in a trigger beyond routing to a Domain
+- Static methods on Service, Domain, or Selector classes, which cannot be stubbed and so break per-layer testing
+- A second Selector class for an object that already has one
+- Undeclared sharing on any class
+
+Legacy code predating the standard is only a finding when the diff touches it.
+
 ### Flows deserve equal scrutiny
 Flows are code and usually get reviewed less carefully than Apex. Apply the same standards: DML in loops, hardcoded IDs, missing fault paths, entry criteria the flow's own actions can satisfy.
 
