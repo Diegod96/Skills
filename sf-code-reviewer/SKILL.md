@@ -67,6 +67,26 @@ Don't inflate severity to force compliance. Reviewers who mark everything blocki
 - Test-only branches in production code paths (`if (Test.isRunningTest())`).
 - API version drift — old classes on very old API versions can behave differently than expected.
 
+## Architecture compliance
+
+The team's mandatory layering is Controller → Service → Domain → Selector. Check every Apex diff against it. If the `apex-architecture` skill is installed, defer to it for the full standard; the checks below are the violations that show up most in review.
+
+- **SOQL outside a Selector** (Rule 2) — in a Service, Domain, Controller, or trigger. Blocking.
+- **Business rules outside a Domain** (Rule 3) — validation or status logic in a Service is the most common version.
+- **Direct status transitions** (Rule 6) — `app.Status__c = 'Approved';` anywhere but the Domain. Blocking, because it bypasses every rule the Domain enforces.
+- **Logic in a trigger** (Rule 5) — triggers route to a Domain and do nothing else.
+- **Fat controller** (Rule 1) — DML, queries, or branching business logic in an `@AuraEnabled` method.
+- **A second Selector for an object** (Rule 10) — add methods to the existing one.
+- **Static Service/Domain/Selector methods** (Rule 9) — these cannot be stubbed, so they break per-layer testing. Static is correct only for controller entry points, stateless utilities, and singleton accessors.
+- **Missing documentation header** (Rule 11).
+- **Undeclared sharing** — every class states `with sharing`, `without sharing`, or `inherited sharing`; `without sharing` needs a justifying comment.
+- **Single-record signatures on a trigger path** (Rule 12) — a Domain or Selector method reachable from a trigger must take a collection. Layering hides this failure rather than preventing it: a Selector call inside a loop looks like a cheap method call.
+- **DML in a nested Service** (Rule 17) — only the outermost Service in a call chain performs DML. Inner Services return unsaved records via `prepare`-prefixed methods.
+- **Singleton with no `@TestVisible` setter** (Rule 15) — without it the class cannot be stubbed, which makes Rule 9's whole purpose unreachable.
+- **`without sharing` used to solve a system-context query** — that disables enforcement for every method on the class. The fix is a separately named system-context method.
+
+Two notes on judgment. Legacy code predating the standard is not a finding unless the diff touches it — flag the new logic, not the file's history. And a documented design-review exception is compliant; if the author says one exists, ask for the reference rather than marking it blocking.
+
 ## Flow review checklist
 
 Flows deserve the same scrutiny as Apex and usually get less:

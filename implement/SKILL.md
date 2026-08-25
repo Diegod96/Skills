@@ -86,9 +86,13 @@ If the branch already exists locally or remotely, that likely means a prior run 
 sf project retrieve start --metadata "CustomObject:Account" --target-org dev-diego
 ```
 
+**Before writing any Apex, decide the layer.** The team's standard is Controller → Service → Domain → Selector, and every piece of logic belongs to exactly one layer. Consult the `apex-architecture` skill and its templates rather than working from memory — the singleton, sharing, and bulk-signature details are easy to get subtly wrong, and a class placed in the wrong layer is a rewrite rather than a fix.
+
+State the plan in layer terms before writing: which Selector methods are needed, which Domain rules, which Service orchestration, which Controller entry point. If the spec's logic doesn't decompose cleanly, that's worth raising before building rather than after.
+
 Then make the edits from the spec. Notes on doing this well:
 
-- **Match existing conventions** over textbook-correct patterns. A handler that matches the five other handlers in the repo is more maintainable than a better one that stands alone. Look at neighboring files first.
+- **Match existing conventions** over textbook-correct patterns. A handler that matches the five other handlers in the repo is more maintainable than a better one that stands alone. Look at neighboring files first. Where the repo predates the architecture standard, new classes still follow the standard — see its legacy-code guidance.
 - **Include the permission metadata.** A new field without FLS in a permission set deploys clean and is invisible to everyone but admins. This is the most common incomplete-package failure — treat new fields as automatically implying a permission set change unless the spec says otherwise.
 - **Include layout and Lightning page changes** where the spec implies users need to see something.
 - **Write the tests as you go**, not after. See Phase 5 for what they need to cover.

@@ -1,6 +1,6 @@
 # Salesforce Team Skills
 
-Nine skills covering the path from an unscoped stakeholder request through to a deployed, documented release.
+Fourteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release.
 
 ## The pipeline
 
@@ -10,8 +10,8 @@ INTAKE                    BUILD                      SHIP
 assess-feasibility   →  implement  ──────────→   pre-deploy-checklist
        ↓                sf-code-reviewer           release-notes-generator
 ticket-to-spec          test-coverage-gap-finder   rollback-plan-drafter
-       ↓                permission-fls-auditor
-change-impact-mapper
+       ↓                permission-fls-auditor     uat-script-drafter
+change-impact-mapper    acceptance-criteria-auditor
 ```
 
 `implement` is the only skill that executes rather than advises — it runs git and
@@ -34,6 +34,7 @@ wrote.
 | Skill | Runs on | Answers |
 |---|---|---|
 | **implement** | An approved spec | "Build it, test it, validate it, open the MR." |
+| **acceptance-criteria-auditor** | A branch plus its ticket | "Is it built, and what's left?" |
 | **sf-code-reviewer** | A branch or MR | "Is this correct and bulk-safe?" |
 | **test-coverage-gap-finder** | A branch | "What's actually verified, not just executed?" |
 | **permission-fls-auditor** | A feature or field | "Who can see this — and who shouldn't?" |
@@ -43,6 +44,7 @@ wrote.
 | Skill | Runs on | Answers |
 |---|---|---|
 | **pre-deploy-checklist** | A release package | "What's true in sandbox that won't be in production?" |
+| **uat-script-drafter** | A story headed for user acceptance testing | "How does a non-technical tester verify this?" |
 | **release-notes-generator** | Merged tickets and branches | "What changed, and who needs to know?" |
 | **rollback-plan-drafter** | A release package | "What do we do if this goes wrong?" |
 
@@ -50,7 +52,14 @@ wrote.
 
 | Skill | Runs on | Answers |
 |---|---|---|
+| **apex-architecture** | Any task producing Apex or LWC | "Which layer does this belong in?" |
 | **polish** | Any document headed for a human | "Does this read like an engineer wrote it?" |
+
+`apex-architecture` encodes the team's mandatory Controller → Service → Domain → Selector standard. `ticket-to-spec` decomposes by layer, `implement` places code by layer, `sf-code-reviewer` enforces it, and the interrogate lens checks it. See `integration/apex-standards-decisions.md` for the corrections applied and the reasoning behind each rule added in v2.
+
+The three build-phase review skills answer different questions and are worth running in order: `acceptance-criteria-auditor` asks whether the ticket is built, `sf-code-reviewer` whether it is built well, `test-coverage-gap-finder` whether it is proven. The auditor is also the tool for a branch that went cold — it reports what you left unfinished and what moved on `main` while you were away, then hands the gap list to `implement`.
+
+`uat-script-drafter` covers the other half of testing from `test-coverage-gap-finder`: that one finds untested logic and drafts Apex test methods, this one turns acceptance criteria into a click-by-click script a stakeholder can run. It reads a spec's Given/When/Then criteria and Edge cases table directly, so run `ticket-to-spec` first where one exists.
 
 `polish` applies to prose, not to code, metadata, tables, or checklists. `release-notes-generator` and `implement` call it on their prose sections; run it manually on specs, impact maps, and anything going to a stakeholder.
 
