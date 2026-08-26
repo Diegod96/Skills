@@ -1,6 +1,6 @@
 # Salesforce Team Skills
 
-Fourteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release.
+Fifteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release.
 
 ## The pipeline
 
@@ -8,16 +8,18 @@ Fourteen skills covering the path from an unscoped stakeholder request through t
 INTAKE                    BUILD                      SHIP
 ──────                    ─────                      ────
 assess-feasibility   →  implement  ──────────→   pre-deploy-checklist
-       ↓                sf-code-reviewer           release-notes-generator
-ticket-to-spec          test-coverage-gap-finder   rollback-plan-drafter
-       ↓                permission-fls-auditor     uat-script-drafter
-change-impact-mapper    acceptance-criteria-auditor
+       ↓                sf-code-reviewer           ui-ux-smoke-tester
+ticket-to-spec          test-coverage-gap-finder   release-notes-generator
+       ↓                permission-fls-auditor     rollback-plan-drafter
+change-impact-mapper    acceptance-criteria-auditor uat-script-drafter
 ```
 
-`implement` is the only skill that executes rather than advises — it runs git and
-sf CLI commands against real orgs. The other three build-phase skills are its
-manual counterparts: run them on a branch `implement` produced, or on one a human
-wrote.
+`implement` is the skill that executes source-control and Salesforce CLI work against
+real orgs. `ui-ux-smoke-tester` also executes: it drives a reachable authenticated
+browser in smoke-only mode and, with explicit delivery authorization, can repair a
+verified defect on its owning feature branch through dev deployment, tests, commit,
+and push. The other build-phase skills are `implement`'s manual counterparts: run
+them on a branch `implement` produced, or on one a human wrote.
 
 ### Intake
 
@@ -44,6 +46,7 @@ wrote.
 | Skill | Runs on | Answers |
 |---|---|---|
 | **pre-deploy-checklist** | A release package | "What's true in sandbox that won't be in production?" |
+| **ui-ux-smoke-tester** | A reachable authenticated UI | "Can the critical user path work and look right right now?" |
 | **uat-script-drafter** | A story headed for user acceptance testing | "How does a non-technical tester verify this?" |
 | **release-notes-generator** | Merged tickets and branches | "What changed, and who needs to know?" |
 | **rollback-plan-drafter** | A release package | "What do we do if this goes wrong?" |
@@ -61,18 +64,27 @@ The three build-phase review skills answer different questions and are worth run
 
 `uat-script-drafter` covers the other half of testing from `test-coverage-gap-finder`: that one finds untested logic and drafts Apex test methods, this one turns acceptance criteria into a click-by-click script a stakeholder can run. It reads a spec's Given/When/Then criteria and Edge cases table directly, so run `ticket-to-spec` first where one exists.
 
+`ui-ux-smoke-tester` is the execution counterpart to that script: it drives a small
+number of critical paths in a reachable authenticated UI and reports observed
+behavior, visible UX defects, browser-console signals, blockers, and untested
+boundaries. With explicit smoke-and-deliver authorization, it can also trace an
+in-scope defect to its original feature branch, repair it, deploy to a development
+org, run applicable Apex tests, re-smoke, then commit and push after every gate
+passes. It does not draft a UAT script, judge whether a branch meets its ticket, or
+replace a full accessibility or regression audit.
+
 `polish` applies to prose, not to code, metadata, tables, or checklists. `release-notes-generator` and `implement` call it on their prose sections; run it manually on specs, impact maps, and anything going to a stakeholder.
 
 ## Setup
 
-Each SKILL.md has an **Org context** section near the top with bracketed placeholders. Fill these in before use — they're what make the output specific to your org rather than generic Salesforce advice. The highest-value ones to populate:
+Most Salesforce SKILL.md files have an **Org context** section near the top with bracketed placeholders. Fill these in before use — they're what make the output specific to your org rather than generic Salesforce advice. The `ui-ux-smoke-tester` instead establishes the browser, environment, profile, persona, and data boundary at run time. The highest-value org-context fields to populate:
 
 - **Known-fragile automation** — the flows and triggers with a history of surprises. This drives risk flags across `assess-feasibility`, `change-impact-mapper`, and `rollback-plan-drafter`.
 - **Integrations, inbound and outbound** — impossible for the skill to infer, and the source of most missed dependencies.
 - **Custom permissions and permission strategy** — `permission-fls-auditor` is much weaker without this.
 - **Backup tooling and frequency** — `rollback-plan-drafter` depends on it entirely.
 
-If you'd rather not maintain the same context in nine files, pull the shared parts into a single `org-context.md` in the repo and replace each skill's section with a pointer to it. That works well when the skills live in a repo the team reads; it works less well if skills get installed individually, since the reference would break.
+If you'd rather not maintain the same context in multiple files, pull the shared parts into a single `org-context.md` in the repo and replace each Salesforce skill's section with a pointer to it. That works well when the skills live in a repo the team reads; it works less well if skills get installed individually, since the reference would break.
 
 ## Chaining
 
@@ -83,6 +95,8 @@ The outputs are designed to feed forward:
 - Impact map's "external and downstream" section → the communication list in the pre-deploy checklist
 - Pre-deploy manual steps → the "post-deploy steps performed" record in the changelog
 - Pre-deploy runtime risks → the decision criteria in the rollback plan
+- Reachable release environment → `ui-ux-smoke-tester`'s evidence-backed critical-path result
+- Smoke blockers and residuals → a repair/retest loop or a stakeholder-ready UAT script
 
 ## Suggested first two
 

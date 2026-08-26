@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI/UX Smoke Tester"
+  short_description: "Smoke-test and optionally deliver UI fixes"
+  default_prompt: "Use $ui-ux-smoke-tester to run a safe UI smoke test and, when I explicitly authorize delivery, repair verified defects through dev deployment, tests, commit, and push."
