@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graph Engineering"
+  short_description: "Design auditable AI-agent execution graphs"
+  default_prompt: "Use $graph-engineering to design a typed, auditable execution graph for this workflow."

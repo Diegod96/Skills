@@ -1,6 +1,6 @@
 # Salesforce Team Skills
 
-Fifteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release.
+Sixteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release, plus the operational graph that can coordinate and audit that work.
 
 ## The pipeline
 
@@ -18,8 +18,11 @@ change-impact-mapper    acceptance-criteria-auditor uat-script-drafter
 real orgs. `ui-ux-smoke-tester` also executes: it drives a reachable authenticated
 browser in smoke-only mode and, with explicit delivery authorization, can repair a
 verified defect on its owning feature branch through dev deployment, tests, commit,
-and push. The other build-phase skills are `implement`'s manual counterparts: run
-them on a branch `implement` produced, or on one a human wrote.
+and push. `graph-engineering` can produce orchestration definitions or executor code
+when implementation is explicitly requested; designing a graph does not itself
+authorize agent creation, infrastructure changes, or deployment. The other
+build-phase skills are `implement`'s manual counterparts: run them on a branch
+`implement` produced, or on one a human wrote.
 
 ### Intake
 
@@ -56,9 +59,12 @@ them on a branch `implement` produced, or on one a human wrote.
 | Skill | Runs on | Answers |
 |---|---|---|
 | **apex-architecture** | Any task producing Apex or LWC | "Which layer does this belong in?" |
+| **graph-engineering** | An agent workflow, execution graph, or orchestration design | "How should tasks, permissions, evidence, state, and recovery fit together?" |
 | **polish** | Any document headed for a human | "Does this read like an engineer wrote it?" |
 
 `apex-architecture` encodes the team's mandatory Controller → Service → Domain → Selector standard. `ticket-to-spec` decomposes by layer, `implement` places code by layer, `sf-code-reviewer` enforces it, and the interrogate lens checks it. See `integration/apex-standards-decisions.md` for the corrections applied and the reasoning behind each rule added in v2.
+
+`graph-engineering` is broader than Salesforce dependency mapping. It designs or audits the operational control plane: typed task edges, constrained roles, runtime state, provenance, deterministic quality gates, human approvals, and recovery. Use `change-impact-mapper` to discover what a Salesforce change touches; use `graph-engineering` when those findings must become an executable, observable workflow.
 
 The three build-phase review skills answer different questions and are worth running in order: `acceptance-criteria-auditor` asks whether the ticket is built, `sf-code-reviewer` whether it is built well, `test-coverage-gap-finder` whether it is proven. The auditor is also the tool for a branch that went cold — it reports what you left unfinished and what moved on `main` while you were away, then hands the gap list to `implement`.
 
