@@ -47,10 +47,11 @@ Do not inspect cookies, passwords, session stores, tokens, or local storage to p
 
 Use the applicable browser-control skill or tool and follow its documented setup and selection rules. The browser is evidence, not an assumption.
 
-1. Honor an explicitly requested browser or surface. If none is named, use the available default or the browser appropriate for the target URL.
-2. Verify the selected browser, profile, current origin, environment, route, viewport, and visible authenticated persona before testing. For Chrome-family work sessions, verify the requested Work/Development profile and any named authenticated instance required by the team (for example, Dia); never assume the first connected browser is correct.
-3. If the page redirects to login, an unauthorized page, the wrong org or environment, or an unexpected account, stop. Classify it as an environment/authentication blocker rather than trying a workaround. If the user must sign in, tell them which browser/profile needs it and wait for the authenticated state.
-4. Capture a baseline URL and page state. Take a screenshot or DOM snapshot when it will help prove a visual issue, but do not capture secrets or unnecessary personal data.
+1. Before any navigation or page interaction, verify that the active browser profile is `Work/Development`. Run this skill only in that profile. Never use or interact with a Personal profile, even when it is already authenticated or contains the requested page, and never use Personal as a fallback. If `Work/Development` is unavailable or cannot be verified, stop and classify the run as blocked.
+2. Honor an explicitly requested browser or surface. If none is named, use the available browser appropriate for the target URL within `Work/Development`.
+3. Verify the selected browser, profile, current origin, environment, route, viewport, and visible authenticated persona before testing. For Chrome-family work sessions, also verify any named authenticated instance required by the team (for example, Dia); never assume the first connected browser is correct.
+4. If the page redirects to login, an unauthorized page, the wrong org or environment, or an unexpected account, stop. Classify it as an environment/authentication blocker rather than trying a workaround. If the user must sign in, tell them which browser/profile needs it and wait for the authenticated state.
+5. Capture a baseline URL and page state. Take a screenshot or DOM snapshot when it will help prove a visual issue, but do not capture secrets or unnecessary personal data.
 
 Use visible, stable roles, labels, and text to find controls. Re-snapshot after navigation, a modal/menu transition, a tab switch, or a substantial DOM change because prior references may be stale. Do not call a path a pass from hidden DOM state or an API response when the requested outcome is visible in the UI.
 
