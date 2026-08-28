@@ -67,6 +67,15 @@ For each in-scope path:
 
 Do not turn incidental polish preferences into defects. Report a UI issue when it impairs completion, comprehension, feedback, or confidence in the tested path, or when the request explicitly names that visual behavior.
 
+## Build repeatable smoke suites
+
+When the user wants a reusable or recurring smoke suite, define a fixed set of deterministic checks rather than generating new paths for each run. Give every check a stable ID and preserve its route, persona, fixture or starting state, viewport, action sequence, expected visible assertions, mutation boundary, and evidence name. Keep the suite unchanged between comparable runs; revise it only when the product contract changes, and record that revision so results from different suite versions are not conflated.
+
+- Use GPT-5.6 Luna for routine, repeatable execution of the fixed suite.
+- When a check fails, preserve the original Luna result and send GPT-5.6 Sol the failed check definition, screenshots, exact expected-versus-observed result, route, persona, reproduction steps, and relevant console or network evidence for diagnosis. Diagnosis does not authorize a fix or any additional mutation.
+- Run the complete, unchanged suite end to end with GPT-5.6 Sol at a declared periodic cadence as a quality-control comparison, and also after a material suite revision. Set and record that cadence when the suite is established. Record which model executed each run and compare disagreements without silently changing the check.
+- If the requested model is unavailable, report the affected run or diagnosis as blocked rather than silently substituting another model.
+
 ## Separate rendered failures from console signals
 
 Inspect browser console output only when the selected browser surface exposes it, and label it separately from what the user saw.
