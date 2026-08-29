@@ -5,7 +5,7 @@
 # Usage:
 #   ./install-skills.sh claude   [--global|--project]   (default: global)
 #   ./install-skills.sh codex    [--global]              (Codex is user-level only)
-#   ./install-skills.sh cursor   [--project]              (Cursor is project-level only)
+#   ./install-skills.sh cursor   [--global|--project]     (default: global plugin)
 #   ./install-skills.sh all      [--global|--project]     (installs to all three)
 #
 #   --dry-run   Show what would happen without copying anything.
@@ -75,7 +75,7 @@ Usage: $0 <claude|codex|cursor|all> [--global|--project] [--dry-run] [--list]
 
   claude   Installs to ~/.claude/skills (global, default) or ./.claude/skills (--project)
   codex    Installs to ~/.agents/skills (Codex is user-level; --project is not supported)
-  cursor   Installs to ./.cursor/skills (Cursor is project-level; --global is not supported)
+  cursor   Installs the local Cursor plugin globally (default) or ./.cursor/skills (--project)
   all      Installs to all three using the sensible default for each
 
 Run from inside a git repo when targeting codex or cursor project scope, so
@@ -136,19 +136,17 @@ do_codex() {
 }
 
 do_cursor() {
-  if [[ "$SCOPE" == "global" ]]; then
-    echo "Note: Cursor skills are project-scoped; there is no confirmed global path." >&2
-    echo "Installing to ./.cursor/skills in the current directory instead." >&2
+  local scope="${SCOPE:-global}"
+  if [[ "$scope" == "project" ]]; then
+    install_to "$(pwd)/.cursor/skills" "Cursor — project skills (./.cursor/skills)"
+    return
   fi
-  install_to "$(pwd)/.cursor/skills" "Cursor — project (./.cursor/skills)"
-  echo ""
-  echo "  Cursor's native context primitive is Rules (.cursor/rules/*.mdc), not"
-  echo "  SKILL.md. Whether Cursor's harness auto-loads a bare .cursor/skills/"
-  echo "  folder has been inconsistent across Cursor versions. If these don't"
-  echo "  show up as available skills after a restart, package them as a Cursor"
-  echo "  plugin instead (a skills/ folder inside a plugin manifest, the same"
-  echo "  layout the pstack plugin uses for unslop and interrogate) and install"
-  echo "  via Cursor's plugin/marketplace flow."
+
+  local args=()
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    args+=(--dry-run)
+  fi
+  "$SOURCE_DIR/install-cursor-plugin.sh" "${args[@]}"
 }
 
 case "$TARGET" in

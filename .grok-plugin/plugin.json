@@ -1,0 +1,28 @@
+{
+  "name": "salesforce-team-skills",
+  "version": "0.1.0",
+  "description": "Salesforce delivery skills for discovery, specification, architecture, implementation, review, testing, deployment readiness, UI smoke testing, UAT, release notes, and rollback planning.",
+  "author": {
+    "name": "Diego Delgado"
+  },
+  "homepage": "https://github.com/Diegod96/Skills",
+  "repository": "https://github.com/Diegod96/Skills.git",
+  "skills": [
+    "./acceptance-criteria-auditor",
+    "./apex-architecture",
+    "./assess-feasibility",
+    "./change-impact-mapper",
+    "./graph-engineering",
+    "./implement",
+    "./permission-fls-auditor",
+    "./polish",
+    "./pre-deploy-checklist",
+    "./release-notes-generator",
+    "./rollback-plan-drafter",
+    "./sf-code-reviewer",
+    "./test-coverage-gap-finder",
+    "./ticket-to-spec",
+    "./uat-script-drafter",
+    "./ui-ux-smoke-tester"
+  ]
+}

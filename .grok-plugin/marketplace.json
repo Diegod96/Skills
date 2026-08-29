@@ -1,0 +1,32 @@
+{
+  "name": "salesforce-team",
+  "description": "Internal Salesforce delivery skills for Diego's team",
+  "owner": {
+    "name": "Diego Delgado"
+  },
+  "plugins": [
+    {
+      "name": "salesforce-team-skills",
+      "description": "Salesforce delivery skills for discovery, specification, architecture, implementation, review, testing, deployment readiness, UI smoke testing, UAT, release notes, and rollback planning.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/salesforce-team-skills"
+      },
+      "version": "0.1.0",
+      "author": {
+        "name": "Diego Delgado"
+      },
+      "homepage": "https://github.com/Diegod96/Skills",
+      "keywords": [
+        "salesforce",
+        "apex",
+        "lwc",
+        "business analysis",
+        "ui ux testing",
+        "code review",
+        "uat"
+      ]
+    }
+  ]
+}

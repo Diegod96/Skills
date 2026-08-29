@@ -1,0 +1,19 @@
+{
+  "name": "salesforce-team-skills",
+  "version": "0.1.0",
+  "description": "Salesforce delivery skills for discovery, specification, architecture, implementation, review, testing, deployment readiness, UI smoke testing, UAT, release notes, and rollback planning.",
+  "author": {
+    "name": "Diego Delgado"
+  },
+  "homepage": "https://github.com/Diegod96/Skills",
+  "repository": "https://github.com/Diegod96/Skills.git",
+  "keywords": [
+    "salesforce",
+    "apex",
+    "lwc",
+    "jira",
+    "testing",
+    "release-management",
+    "agent-orchestration"
+  ]
+}
