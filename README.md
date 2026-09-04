@@ -1,11 +1,11 @@
 # Salesforce Team Skills
 
-Sixteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release, plus the operational graph that can coordinate and audit that work.
+Seventeen skills covering the path from an unscoped stakeholder request through to a deployed, documented release, plus the operational graph that can coordinate and audit that work.
 
 ## Cursor plugin
 
 This repository is also a native Cursor plugin named `salesforce-team-skills`.
-Its manifest lives at `.cursor-plugin/plugin.json` and exposes all sixteen skill
+Its manifest lives at `.cursor-plugin/plugin.json` and exposes all seventeen skill
 folders without duplicating them.
 
 For local development or personal use, preview and install an exact package into
@@ -23,7 +23,7 @@ package is used because some Cursor builds reject plugin symlinks that resolve
 outside `~/.cursor/plugins/local`.
 
 Restart Cursor or run **Developer: Reload Window**, then open **Customize** and
-confirm that `salesforce-team-skills` and its sixteen skills are visible. Cursor
+confirm that `salesforce-team-skills` and its seventeen skills are visible. Cursor
 lists skills under **Agent Decides** and supports manual invocation with
 `/skill-name`.
 
@@ -34,7 +34,7 @@ root; no committed generated bundle or copied `skills/` directory is required.
 ## Grok CLI/TUI plugin
 
 Grok's local CLI/TUI loader uses a separate registry from Cursor. Preview and
-install the same sixteen skills as the user-level `salesforce-team-skills`
+install the same seventeen skills as the user-level `salesforce-team-skills`
 plugin with:
 
 ```bash
@@ -112,9 +112,18 @@ build-phase skills are `implement`'s manual counterparts: run them on a branch
 |---|---|---|
 | **apex-architecture** | Any task producing Apex or LWC | "Which layer does this belong in?" |
 | **graph-engineering** | An agent workflow, execution graph, or orchestration design | "How should tasks, permissions, evidence, state, and recovery fit together?" |
+| **ponytail** | Implementation, refactoring, or code review | "What is the simplest maintainable change that meets the requirements?" |
 | **polish** | Any document headed for a human | "Does this read like an engineer wrote it?" |
 
 `apex-architecture` encodes the team's mandatory Controller → Service → Domain → Selector standard. `ticket-to-spec` decomposes by layer, `implement` places code by layer, `sf-code-reviewer` enforces it, and the interrogate lens checks it. See `integration/apex-standards-decisions.md` for the corrections applied and the reasoning behind each rule added in v2.
+
+`ponytail` adapts [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
+under its MIT license. It favors reuse, standard libraries, and native features
+while preserving the full request, Salesforce layering, permissions, and required
+tests. `implement` and `sf-code-reviewer` refer to it during solution selection
+and review. Invoke it directly with `$ponytail` in Codex or `/ponytail` where
+supported. It is a portable skill with no lifecycle hooks or MCP dependency;
+upstream provenance and adaptation notes are in `ponytail/SKILL.md`.
 
 `graph-engineering` is broader than Salesforce dependency mapping. It designs or audits the operational control plane: typed task edges, constrained roles, runtime state, provenance, deterministic quality gates, human approvals, and recovery. Use `change-impact-mapper` to discover what a Salesforce change touches; use `graph-engineering` when those findings must become an executable, observable workflow.
 

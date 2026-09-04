@@ -16,6 +16,7 @@
     "./implement",
     "./permission-fls-auditor",
     "./polish",
+    "./ponytail",
     "./pre-deploy-checklist",
     "./release-notes-generator",
     "./rollback-plan-drafter",

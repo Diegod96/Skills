@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ponytail"
+  short_description: "Simplify code while preserving delivery standards"
+  default_prompt: "Use $ponytail to find the simplest maintainable solution that meets this task and its required checks."

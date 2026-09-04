@@ -113,7 +113,7 @@ fi
 if [[ -n "$installed_source" ]]; then
   "$GROK_BIN" plugin update "$PLUGIN_NAME"
 else
-  "$GROK_BIN" plugin install "$PLUGIN_NAME" --trust
+  "$GROK_BIN" plugin install "$PACKAGE_DIR" --trust
 fi
 
 "$GROK_BIN" plugin enable "$PLUGIN_NAME"
