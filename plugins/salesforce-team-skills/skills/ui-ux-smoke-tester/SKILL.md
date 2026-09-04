@@ -47,10 +47,11 @@ Do not inspect cookies, passwords, session stores, tokens, or local storage to p
 
 Use the applicable browser-control skill or tool and follow its documented setup and selection rules. The browser is evidence, not an assumption.
 
-1. Honor an explicitly requested browser or surface. If none is named, use the available default or the browser appropriate for the target URL.
-2. Verify the selected browser, profile, current origin, environment, route, viewport, and visible authenticated persona before testing. For Chrome-family work sessions, verify the requested Work/Development profile and any named authenticated instance required by the team (for example, Dia); never assume the first connected browser is correct.
-3. If the page redirects to login, an unauthorized page, the wrong org or environment, or an unexpected account, stop. Classify it as an environment/authentication blocker rather than trying a workaround. If the user must sign in, tell them which browser/profile needs it and wait for the authenticated state.
-4. Capture a baseline URL and page state. Take a screenshot or DOM snapshot when it will help prove a visual issue, but do not capture secrets or unnecessary personal data.
+1. Before any navigation or page interaction, verify that the active browser profile is `Work/Development`. Run this skill only in that profile. Never use or interact with a Personal profile, even when it is already authenticated or contains the requested page, and never use Personal as a fallback. If `Work/Development` is unavailable or cannot be verified, stop and classify the run as blocked.
+2. Honor an explicitly requested browser or surface. If none is named, use the available browser appropriate for the target URL within `Work/Development`.
+3. Verify the selected browser, profile, current origin, environment, route, viewport, and visible authenticated persona before testing. For Chrome-family work sessions, also verify any named authenticated instance required by the team (for example, Dia); never assume the first connected browser is correct.
+4. If the page redirects to login, an unauthorized page, the wrong org or environment, or an unexpected account, stop. Classify it as an environment/authentication blocker rather than trying a workaround. If the user must sign in, tell them which browser/profile needs it and wait for the authenticated state.
+5. Capture a baseline URL and page state. Take a screenshot or DOM snapshot when it will help prove a visual issue, but do not capture secrets or unnecessary personal data.
 
 Use visible, stable roles, labels, and text to find controls. Re-snapshot after navigation, a modal/menu transition, a tab switch, or a substantial DOM change because prior references may be stale. Do not call a path a pass from hidden DOM state or an API response when the requested outcome is visible in the UI.
 
@@ -66,6 +67,15 @@ For each in-scope path:
 6. If one path fails, preserve evidence and run other independent, safe paths where doing so will not obscure the failure or create side effects. Do not work around a blocker by changing the requested persona, environment, data boundary, or mutation policy.
 
 Do not turn incidental polish preferences into defects. Report a UI issue when it impairs completion, comprehension, feedback, or confidence in the tested path, or when the request explicitly names that visual behavior.
+
+## Build repeatable smoke suites
+
+When the user wants a reusable or recurring smoke suite, define a fixed set of deterministic checks rather than generating new paths for each run. Give every check a stable ID and preserve its route, persona, fixture or starting state, viewport, action sequence, expected visible assertions, mutation boundary, and evidence name. Keep the suite unchanged between comparable runs; revise it only when the product contract changes, and record that revision so results from different suite versions are not conflated.
+
+- Use GPT-5.6 Luna for routine, repeatable execution of the fixed suite.
+- When a check fails, preserve the original Luna result and send GPT-5.6 Sol the failed check definition, screenshots, exact expected-versus-observed result, route, persona, reproduction steps, and relevant console or network evidence for diagnosis. Diagnosis does not authorize a fix or any additional mutation.
+- Run the complete, unchanged suite end to end with GPT-5.6 Sol at a declared periodic cadence as a quality-control comparison, and also after a material suite revision. Set and record that cadence when the suite is established. Record which model executed each run and compare disagreements without silently changing the check.
+- If the requested model is unavailable, report the affected run or diagnosis as blocked rather than silently substituting another model.
 
 ## Separate rendered failures from console signals
 

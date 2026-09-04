@@ -38,6 +38,10 @@
             "description": "Polish Salesforce documents and technical prose for human readers."
           },
           {
+            "name": "ponytail",
+            "description": "Simplify development through reuse and native features while preserving requirements and delivery standards."
+          },
+          {
             "name": "pre-deploy-checklist",
             "description": "Check a Salesforce branch or release package before deployment."
           },

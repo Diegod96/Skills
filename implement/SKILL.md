@@ -80,6 +80,8 @@ If the branch already exists locally or remotely, that likely means a prior run 
 
 ## Phase 3 — Retrieve, then edit
 
+Apply `ponytail` when choosing the implementation: reuse existing code and native features before adding custom code. The simpler solution must meet the full spec and preserve the architecture, permissions, and testing gates below.
+
 **Retrieve current state before editing anything that already exists.** Working from the repo alone risks clobbering changes someone made in the org, and produces diffs that don't reflect reality.
 
 ```bash

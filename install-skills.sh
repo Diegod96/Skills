@@ -142,11 +142,11 @@ do_cursor() {
     return
   fi
 
-  local args=()
   if [[ "$DRY_RUN" -eq 1 ]]; then
-    args+=(--dry-run)
+    "$SOURCE_DIR/install-cursor-plugin.sh" --dry-run
+  else
+    "$SOURCE_DIR/install-cursor-plugin.sh"
   fi
-  "$SOURCE_DIR/install-cursor-plugin.sh" "${args[@]}"
 }
 
 case "$TARGET" in

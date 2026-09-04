@@ -62,6 +62,8 @@ Don't inflate severity to force compliance. Reviewers who mark everything blocki
 - Assumptions about picklist values as string literals scattered through code rather than centralized.
 
 ### Maintainability
+
+Use `ponytail` to identify unnecessary custom code, dependencies, or abstractions. Suggest a concrete simpler alternative only when it preserves required behavior, architecture, security, and tests; label optional cleanup as **Consider**.
 - Business logic in triggers rather than delegated to a handler or service class.
 - Duplicated logic that already exists in a utility class.
 - Test-only branches in production code paths (`if (Test.isRunningTest())`).
