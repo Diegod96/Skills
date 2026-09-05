@@ -109,6 +109,8 @@ here gets better reviews than "LGTM-bait" descriptions.]
 
 ### After opening
 
+Continue with Phase 10 and [babysit-pr.md](babysit-pr.md) to inspect checks and review feedback for the current revision.
+
 Report the MR link, and state plainly anything that still needs a human: unresolved uncertainties, environment configuration outside the branch, manual steps, and any test assertion that was changed during the run.
 
 The "reviewer notes" section is worth real effort. A reviewer told where to look gives a better review than one handed a clean-looking diff and no guidance — and an implementation run that surfaces its own uncertainties is far more trustworthy than one that reports unqualified success.
