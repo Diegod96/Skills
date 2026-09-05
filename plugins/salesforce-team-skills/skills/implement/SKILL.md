@@ -1,11 +1,11 @@
 ---
 name: implement
-description: Execute an approved Salesforce spec end to end — branch from main using the feature/JIRA-123-description convention, write the metadata, deploy to the dev org, run and fix the related Apex tests with coverage, commit, push, validate against the QA org, and open a merge request. Use this whenever someone says "implement this", "build this ticket", "/implement", "take this spec and ship it", hands over an approved spec or JIRA ticket and expects working code, or asks to pick up where a half-finished branch left off. Do NOT use this to decide what to build — use assess-feasibility and ticket-to-spec first.
+description: Execute an approved Salesforce spec end to end — branch from main using the feature/JIRA-123-description convention, write the metadata, deploy to the dev org, run and fix the related Apex tests with coverage, commit, push, validate against the QA org, open a merge request, and follow its checks and review feedback through readiness or a concrete blocker. Use this whenever someone says "implement this", "build this ticket", "/implement", "take this spec and ship it", hands over an approved spec or JIRA ticket and expects working code, or asks to pick up where a half-finished branch left off. Do NOT use this to decide what to build — use assess-feasibility and ticket-to-spec first.
 ---
 
 # Implement
 
-This skill takes an approved spec and carries it through to an open merge request. It runs real commands against real source control and real orgs, so the operating principle is: **be aggressive about the mechanical work, conservative about anything irreversible, and stop and ask rather than guess.**
+This skill takes an approved spec and carries it through implementation and PR/MR follow-through. It runs real commands against real source control and real orgs, so the operating principle is: **be aggressive about the mechanical work, conservative about anything irreversible, and stop and ask rather than guess.**
 
 Read `references/failure-triage.md` when a deploy or test run fails, and `references/git-and-mr.md` when preparing the commit, push, and MR.
 
@@ -183,6 +183,12 @@ Run `polish` on the prose sections of the MR description — the summary, the re
 
 Confirm the target branch and reviewers before opening it.
 
+## Phase 10 — Babysit PR / MR
+
+After opening the request, or when resuming an existing request, read [references/babysit-pr.md](references/babysit-pr.md). Inspect current CI, Salesforce validation, review feedback, and mergeability; fix confirmed defects within the approved scope and recheck the pushed revision. Carry forward existing authorization and the failure retry budget.
+
+Finish with an evidenced state: ready for merge, waiting for review, checks pending, blocked, merged, or closed. This phase does not authorize merging, production deployment, external review replies, or recurring background monitoring.
+
 ## Resuming an interrupted run
 
 If the branch already exists, figure out where things stopped before doing anything:
@@ -199,10 +205,10 @@ Then pick up from the earliest incomplete phase. Don't restart from scratch and 
 
 When the run finishes — or stops early — report:
 
-- Branch name and MR link
+- Branch name, MR link, current head SHA, and PR/MR follow-through state
 - Files created and modified
 - Tests run, pass/fail, and per-class coverage
-- Validation result
+- Validation result for the current revision, pending checks/reviews, and retry counts
 - **Manual post-deploy steps** the QA deploy will need (permission set assignment, scheduling jobs, activating flows, loading custom metadata)
 - **Anything deferred or out of scope**, including adjacent problems noticed but not fixed
 - **Anything you're uncertain about** in the implementation

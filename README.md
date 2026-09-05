@@ -90,7 +90,7 @@ build-phase skills are `implement`'s manual counterparts: run them on a branch
 
 | Skill | Runs on | Answers |
 |---|---|---|
-| **implement** | An approved spec | "Build it, test it, validate it, open the MR." |
+| **implement** | An approved spec | "Build it, test it, validate it, open the MR, follow checks and reviews." |
 | **acceptance-criteria-auditor** | A branch plus its ticket | "Is it built, and what's left?" |
 | **sf-code-reviewer** | A branch or MR | "Is this correct and bulk-safe?" |
 | **test-coverage-gap-finder** | A branch | "What's actually verified, not just executed?" |
