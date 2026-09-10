@@ -16,6 +16,10 @@ Stay in the user's current MyPenn or Compass task. The shared tooling lives in `
 5. When work crosses research, story, planning, UAT, acceptance or release ownership, read [role handoffs](references/role-handoffs.md). Persist the applicable `role-handoff` contract and run `handoff-check` before a dependent stage. Optional `role-run` helpers require a concrete bounded need and an exact `role-dispatch-request`; ordinary fully specified work continues directly to the one builder and required evaluator.
 6. Review the accepted isolated candidate and apply only its scoped changes to the assigned product worktree after confirming the source baseline is unchanged. Follow the project rules for development-org checks that need Salesforce access; worker networking is disabled. Then call `prepare` with the delivery request against the final product candidate. Keep requests, authorization files and evidence outside product commits.
 
+## Read-only PM views
+
+Use `scripts/factory pm-status <absolute-ledger.sqlite> [run-id]` for stable JSON status and `scripts/factory pm-summary <absolute-ledger.sqlite> [run-id]` for a Markdown summary. Both read the named factory ledger and return their output in the current task. They do not create another task, publish to an external system, mutate the ledger, or send stakeholder messages. Treat missing or unresolved evidence as pending rather than inferring completion.
+
 ## Supervised verification
 
 - Local package preparation is reversible and needs no extra approval. For a concrete check-only run, use existing authorization covering this ticket, package and target; if it is missing, present the prepared package and exact action for the user to authorize. Record that real decision as a `validation-authorization` artifact bound to the returned candidate. Do not treat skill invocation or permission to install tooling as release authorization.
