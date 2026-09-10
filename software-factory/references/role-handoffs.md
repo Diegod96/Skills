@@ -2,7 +2,7 @@
 
 Use role handoffs when responsibility changes. The current product task remains the coordinator and retains the complete request history. Do not create another user-visible task merely to represent a role.
 
-The factory publishes strict v1 schemas for `role-handoff`, `role-dispatch-request`, `role-routing-decision` and `role-execution`. Keep these artifacts outside product commits. Every handoff names its owner and distinct accepting owner, exact source/input versions, scope, interfaces, criteria, checks, evidence, findings, required outputs and the remaining cumulative repair/token/deadline budget.
+The factory publishes strict v1 schemas for `role-handoff`, `role-dispatch-request`, `role-routing-decision` and `role-execution`. Keep these artifacts outside product commits. Every handoff names its owner and distinct accepting owner, exact parent handoff IDs and source/input versions, scope, interfaces, criteria, checks, evidence, findings, required outputs and the remaining cumulative repair/token/deadline budget.
 
 ## Existing skill chain
 
