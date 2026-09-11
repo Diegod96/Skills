@@ -1,0 +1,6 @@
+interface:
+  display_name: "Software Factory"
+  short_description: "Verify MyPenn and Compass ticket delivery"
+  default_prompt: "Use $software-factory to prepare this approved ticket for implementation and verified review in the current project."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+factory_root=${SOFTWARE_FACTORY_ROOT:-"$HOME/Developer/software-factory"}
+if [ ! -x "$factory_root/bin/factory" ]; then
+  echo "Software Factory is unavailable at $factory_root. Set SOFTWARE_FACTORY_ROOT to its checkout." >&2
+  exit 1
+fi
+exec "$factory_root/bin/factory" "$@"
