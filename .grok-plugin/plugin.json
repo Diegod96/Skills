@@ -17,6 +17,7 @@
     "./permission-fls-auditor",
     "./polish",
     "./ponytail",
+    "./pr-babysitter",
     "./pre-deploy-checklist",
     "./release-notes-generator",
     "./rollback-plan-drafter",

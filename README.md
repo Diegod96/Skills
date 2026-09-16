@@ -1,11 +1,11 @@
 # Salesforce Team Skills
 
-Seventeen skills covering the path from an unscoped stakeholder request through to a deployed, documented release, plus the operational graph that can coordinate and audit that work.
+Eighteen skills covering the path from an unscoped stakeholder request through to a deployed, documented release, plus the operational graph that can coordinate and audit that work.
 
 ## Cursor plugin
 
 This repository is also a native Cursor plugin named `salesforce-team-skills`.
-Its manifest lives at `.cursor-plugin/plugin.json` and exposes all seventeen skill
+Its manifest lives at `.cursor-plugin/plugin.json` and exposes all eighteen skill
 folders without duplicating them.
 
 For local development or personal use, preview and install an exact package into
@@ -23,7 +23,7 @@ package is used because some Cursor builds reject plugin symlinks that resolve
 outside `~/.cursor/plugins/local`.
 
 Restart Cursor or run **Developer: Reload Window**, then open **Customize** and
-confirm that `salesforce-team-skills` and its seventeen skills are visible. Cursor
+confirm that `salesforce-team-skills` and its eighteen skills are visible. Cursor
 lists skills under **Agent Decides** and supports manual invocation with
 `/skill-name`.
 
@@ -34,7 +34,7 @@ root; no committed generated bundle or copied `skills/` directory is required.
 ## Grok CLI/TUI plugin
 
 Grok's local CLI/TUI loader uses a separate registry from Cursor. Preview and
-install the same seventeen skills as the user-level `salesforce-team-skills`
+install the same eighteen skills as the user-level `salesforce-team-skills`
 plugin with:
 
 ```bash
@@ -59,15 +59,18 @@ entry.
 ```
 INTAKE                    BUILD                      SHIP
 ──────                    ─────                      ────
-assess-feasibility   →  implement  ──────────→   pre-deploy-checklist
-       ↓                sf-code-reviewer           ui-ux-smoke-tester
-ticket-to-spec          test-coverage-gap-finder   release-notes-generator
-       ↓                permission-fls-auditor     rollback-plan-drafter
-change-impact-mapper    acceptance-criteria-auditor uat-script-drafter
+assess-feasibility   →  implement  ──────────→   pr-babysitter
+       ↓                sf-code-reviewer           pre-deploy-checklist
+ticket-to-spec          test-coverage-gap-finder   ui-ux-smoke-tester
+       ↓                permission-fls-auditor     release-notes-generator
+change-impact-mapper    acceptance-criteria-auditor rollback-plan-drafter
+                                                  uat-script-drafter
 ```
 
 `implement` is the skill that executes source-control and Salesforce CLI work against
-real orgs. `ui-ux-smoke-tester` also executes: it drives a reachable authenticated
+real orgs. `pr-babysitter` is its standalone follow-through: it takes an already-open
+PR/MR and drives it through QA check-only validation to green (triage, fix on the
+feature branch, dev deploy, tests, commit, push, revalidate). `ui-ux-smoke-tester` also executes: it drives a reachable authenticated
 browser in smoke-only mode and, with explicit delivery authorization, can repair a
 verified defect on its owning feature branch through dev deployment, tests, commit,
 and push. `graph-engineering` can produce orchestration definitions or executor code
@@ -100,6 +103,7 @@ build-phase skills are `implement`'s manual counterparts: run them on a branch
 
 | Skill | Runs on | Answers |
 |---|---|---|
+| **pr-babysitter** | An open PR/MR validating against QA | "Watch it, fix validation and test failures, get it green." |
 | **pre-deploy-checklist** | A release package | "What's true in sandbox that won't be in production?" |
 | **ui-ux-smoke-tester** | A reachable authenticated UI | "Can the critical user path work and look right right now?" |
 | **uat-script-drafter** | A story headed for user acceptance testing | "How does a non-technical tester verify this?" |
@@ -160,6 +164,7 @@ The outputs are designed to feed forward:
 - Feasibility risk flags → carried into the spec's open questions rather than rediscovered
 - Spec metadata list → the starting point for the impact map
 - Impact map's "external and downstream" section → the communication list in the pre-deploy checklist
+- Open PR/MR plus its QA validation report → `pr-babysitter`'s fix loop → green head ready for merge → the pre-deploy checklist
 - Pre-deploy manual steps → the "post-deploy steps performed" record in the changelog
 - Pre-deploy runtime risks → the decision criteria in the rollback plan
 - Reachable release environment → `ui-ux-smoke-tester`'s evidence-backed critical-path result
